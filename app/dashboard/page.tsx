@@ -74,7 +74,14 @@ export default function DashboardPage() {
       {/* Header */}
       <header className="bg-white/10 backdrop-blur-md border-b border-white/20">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold !text-white">💰 Vibe Budget</h1>
+          <div className="flex items-center gap-6">
+            <h1 className="text-xl font-bold !text-white">💰 Vibe Budget</h1>
+            <nav className="hidden md:flex items-center gap-2">
+              <button onClick={() => router.push("/dashboard/banks")} className="!text-white/80 hover:!text-white hover:bg-white/10 px-3 py-1.5 rounded-lg text-sm transition-all">🏦 Bănci</button>
+              <button onClick={() => router.push("/dashboard/categories")} className="!text-white/80 hover:!text-white hover:bg-white/10 px-3 py-1.5 rounded-lg text-sm transition-all">🗂️ Categorii</button>
+              <button onClick={() => router.push("/dashboard/currencies")} className="!text-white/80 hover:!text-white hover:bg-white/10 px-3 py-1.5 rounded-lg text-sm transition-all">💱 Valute</button>
+            </nav>
+          </div>
           <div className="flex items-center gap-4">
             <span className="!text-white/80 text-sm hidden sm:block">{user.email}</span>
             <button
