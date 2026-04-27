@@ -71,6 +71,12 @@ export default function LoginPage() {
               />
             </div>
 
+            <div className="text-right">
+              <Link href="/forgot-password" className="!text-white/70 hover:!text-white text-sm transition-colors">
+                Ai uitat parola?
+              </Link>
+            </div>
+
             <button
               type="submit"
               disabled={loading}

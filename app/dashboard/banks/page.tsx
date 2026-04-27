@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import DashboardNav from "@/app/dashboard/components/DashboardNav";
 
 interface Bank {
   id: string;
@@ -125,8 +126,8 @@ export default function BanksPage() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-teal-400 via-teal-500 to-orange-400 flex items-center justify-center">
-        <div className="!text-white text-xl animate-pulse">Se încarcă...</div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-gray-900 text-xl animate-pulse">Se încarcă...</div>
       </div>
     );
   }
@@ -134,37 +135,15 @@ export default function BanksPage() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-400 via-teal-500 to-orange-400">
-      {/* Header */}
-      <header className="bg-white/10 backdrop-blur-md border-b border-white/20">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="!text-white/80 hover:!text-white text-sm transition-colors"
-            >
-              ← Dashboard
-            </button>
-            <h1 className="text-xl font-bold !text-white">🏦 Băncile mele</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="!text-white/80 text-sm hidden sm:block">{user.email}</span>
-            <button
-              onClick={handleLogout}
-              className="bg-white/20 hover:bg-white/30 !text-white border border-white/30 rounded-xl px-4 py-2 text-sm font-medium transition-all"
-            >
-              Ieșire
-            </button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gray-50">
+      <DashboardNav />
 
       {/* Content */}
       <main className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-2xl font-bold !text-white">Bănci</h2>
-            <p className="!text-white/70 mt-1 text-sm">{banks.length} bancă/bănci înregistrate</p>
+            <h2 className="text-2xl font-bold text-gray-900">Bănci</h2>
+            <p className="text-gray-500 mt-1 text-sm">{banks.length} bancă/bănci înregistrate</p>
           </div>
           <button
             onClick={openAdd}
@@ -175,28 +154,28 @@ export default function BanksPage() {
         </div>
 
         {/* Table */}
-        <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg overflow-hidden">
+        <div className="bg-gray-100 border border-gray-300 rounded-2xl shadow-lg overflow-hidden">
           {loading ? (
             <div className="p-8 text-center">
-              <div className="!text-white animate-pulse">Se încarcă băncile...</div>
+              <div className="text-gray-900 animate-pulse">Se încarcă băncile...</div>
             </div>
           ) : banks.length === 0 ? (
             <div className="p-12 text-center">
               <p className="text-4xl mb-3">🏦</p>
-              <p className="!text-white font-semibold text-lg">Nu ai bănci adăugate</p>
-              <p className="!text-white/60 text-sm mt-1">Click pe "Adaugă bancă" pentru a începe</p>
+              <p className="text-gray-900 font-semibold text-lg">Nu ai bănci adăugate</p>
+              <p className="text-gray-500 text-sm mt-1">Click pe "Adaugă bancă" pentru a începe</p>
             </div>
           ) : (
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/20">
-                  <th className="text-left px-6 py-4 !text-white/70 text-sm font-medium uppercase tracking-wide">
+                <tr className="border-b border-gray-300">
+                  <th className="text-left px-6 py-4 text-gray-500 text-sm font-medium uppercase tracking-wide">
                     Culoare
                   </th>
-                  <th className="text-left px-6 py-4 !text-white/70 text-sm font-medium uppercase tracking-wide">
+                  <th className="text-left px-6 py-4 text-gray-500 text-sm font-medium uppercase tracking-wide">
                     Nume bancă
                   </th>
-                  <th className="text-right px-6 py-4 !text-white/70 text-sm font-medium uppercase tracking-wide">
+                  <th className="text-right px-6 py-4 text-gray-500 text-sm font-medium uppercase tracking-wide">
                     Acțiuni
                   </th>
                 </tr>
@@ -205,31 +184,31 @@ export default function BanksPage() {
                 {banks.map((bank, index) => (
                   <tr
                     key={bank.id}
-                    className={`border-b border-white/10 hover:bg-white/10 transition-colors ${
+                    className={`border-b border-gray-200 hover:bg-gray-100 transition-colors ${
                       index === banks.length - 1 ? "border-b-0" : ""
                     }`}
                   >
                     <td className="px-6 py-4">
                       <div
-                        className="w-8 h-8 rounded-full border-2 border-white/30"
+                        className="w-8 h-8 rounded-full border-2 border-gray-300"
                         style={{ backgroundColor: bank.color }}
                       />
                     </td>
                     <td className="px-6 py-4">
-                      <span className="!text-white font-medium">{bank.name}</span>
+                      <span className="text-gray-800 font-medium">{bank.name}</span>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => openEdit(bank)}
-                          className="bg-white/20 hover:bg-white/30 !text-white border border-white/30 rounded-lg px-3 py-1.5 text-sm transition-all"
+                          className="bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300 rounded-lg px-3 py-1.5 text-sm transition-all"
                         >
                           Editează
                         </button>
                         <button
                           onClick={() => handleDelete(bank.id)}
                           disabled={deletingId === bank.id}
-                          className="bg-red-500/30 hover:bg-red-500/50 !text-white border border-red-400/30 rounded-lg px-3 py-1.5 text-sm transition-all disabled:opacity-50"
+                          className="bg-red-500/30 hover:bg-red-500/50 text-gray-900 border border-red-400/30 rounded-lg px-3 py-1.5 text-sm transition-all disabled:opacity-50"
                         >
                           {deletingId === bank.id ? "..." : "Șterge"}
                         </button>
@@ -246,14 +225,14 @@ export default function BanksPage() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-          <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-2xl p-8 w-full max-w-md">
-            <h3 className="text-xl font-bold !text-white mb-6">
+          <div className="bg-gray-100 border border-gray-300 rounded-2xl shadow-2xl p-8 w-full max-w-md">
+            <h3 className="text-xl font-bold text-gray-900 mb-6">
               {editingBank ? "Editează bancă" : "Adaugă bancă nouă"}
             </h3>
 
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium !text-white/90 mb-1.5">
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
                   Nume bancă
                 </label>
                 <input
@@ -261,13 +240,13 @@ export default function BanksPage() {
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="ex: ING, Revolut, BCR..."
-                  className="w-full bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/50"
                   autoFocus
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium !text-white/90 mb-3">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Culoare
                 </label>
                 <div className="flex flex-wrap gap-3 mb-3">
@@ -291,7 +270,7 @@ export default function BanksPage() {
                     onChange={(e) => setFormColor(e.target.value)}
                     className="w-10 h-10 rounded-lg cursor-pointer border-0 bg-transparent"
                   />
-                  <span className="!text-white/70 text-sm">sau alege culoare personalizată</span>
+                  <span className="text-gray-500 text-sm">sau alege culoare personalizată</span>
                 </div>
               </div>
             </div>
@@ -299,7 +278,7 @@ export default function BanksPage() {
             <div className="flex gap-3 mt-8">
               <button
                 onClick={closeModal}
-                className="flex-1 bg-white/10 hover:bg-white/20 !text-white border border-white/30 rounded-xl py-3 font-medium transition-all"
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 border border-gray-300 rounded-xl py-3 font-medium transition-all"
               >
                 Anulează
               </button>

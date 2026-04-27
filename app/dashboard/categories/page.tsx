@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import DashboardNav from "@/app/dashboard/components/DashboardNav";
 
 interface Category {
   id: string;
@@ -146,8 +147,8 @@ export default function CategoriesPage() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-teal-400 via-teal-500 to-orange-400 flex items-center justify-center">
-        <div className="!text-white text-xl animate-pulse">Se încarcă...</div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-gray-900 text-xl animate-pulse">Se încarcă...</div>
       </div>
     );
   }
@@ -155,30 +156,8 @@ export default function CategoriesPage() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-400 via-teal-500 to-orange-400">
-      {/* Header */}
-      <header className="bg-white/10 backdrop-blur-md border-b border-white/20">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="!text-white/80 hover:!text-white text-sm transition-colors"
-            >
-              ← Dashboard
-            </button>
-            <h1 className="text-xl font-bold !text-white">🗂️ Categorii</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="!text-white/80 text-sm hidden sm:block">{user.email}</span>
-            <button
-              onClick={handleLogout}
-              className="bg-white/20 hover:bg-white/30 !text-white border border-white/30 rounded-xl px-4 py-2 text-sm font-medium transition-all"
-            >
-              Ieșire
-            </button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gray-50">
+      <DashboardNav />
 
       <main className="container mx-auto px-4 py-8 space-y-8">
         {/* INCOME TABLE */}
@@ -186,8 +165,8 @@ export default function CategoriesPage() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <span className="text-2xl">📈</span>
-              <h2 className="text-xl font-bold !text-white">Venituri</h2>
-              <span className="bg-green-500/30 !text-white text-xs px-2 py-1 rounded-full border border-green-400/30">
+              <h2 className="text-xl font-bold text-gray-900">Venituri</h2>
+              <span className="bg-green-500/30 text-gray-900 text-xs px-2 py-1 rounded-full border border-green-400/30">
                 {income.length} categorii
               </span>
             </div>
@@ -199,12 +178,12 @@ export default function CategoriesPage() {
             </button>
           </div>
 
-          <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg overflow-hidden">
+          <div className="bg-gray-100 border border-gray-300 rounded-2xl shadow-lg overflow-hidden">
             {loading ? (
-              <div className="p-8 text-center !text-white animate-pulse">Se încarcă...</div>
+              <div className="p-8 text-center text-gray-900 animate-pulse">Se încarcă...</div>
             ) : income.length === 0 ? (
               <div className="p-8 text-center">
-                <p className="!text-white/60 text-sm">Nu ai categorii de venituri. Adaugă una!</p>
+                <p className="text-gray-500 text-sm">Nu ai categorii de venituri. Adaugă una!</p>
               </div>
             ) : (
               <CategoryTable
@@ -222,8 +201,8 @@ export default function CategoriesPage() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <span className="text-2xl">📉</span>
-              <h2 className="text-xl font-bold !text-white">Cheltuieli</h2>
-              <span className="bg-red-500/30 !text-white text-xs px-2 py-1 rounded-full border border-red-400/30">
+              <h2 className="text-xl font-bold text-gray-900">Cheltuieli</h2>
+              <span className="bg-red-500/30 text-gray-900 text-xs px-2 py-1 rounded-full border border-red-400/30">
                 {expense.length} categorii
               </span>
             </div>
@@ -235,12 +214,12 @@ export default function CategoriesPage() {
             </button>
           </div>
 
-          <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg overflow-hidden">
+          <div className="bg-gray-100 border border-gray-300 rounded-2xl shadow-lg overflow-hidden">
             {loading ? (
-              <div className="p-8 text-center !text-white animate-pulse">Se încarcă...</div>
+              <div className="p-8 text-center text-gray-900 animate-pulse">Se încarcă...</div>
             ) : expense.length === 0 ? (
               <div className="p-8 text-center">
-                <p className="!text-white/60 text-sm">Nu ai categorii de cheltuieli. Adaugă una!</p>
+                <p className="text-gray-500 text-sm">Nu ai categorii de cheltuieli. Adaugă una!</p>
               </div>
             ) : (
               <CategoryTable
@@ -257,14 +236,14 @@ export default function CategoriesPage() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-          <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-2xl p-8 w-full max-w-md">
-            <h3 className="text-xl font-bold !text-white mb-6">
+          <div className="bg-gray-100 border border-gray-300 rounded-2xl shadow-2xl p-8 w-full max-w-md">
+            <h3 className="text-xl font-bold text-gray-900 mb-6">
               {editingCategory ? "Editează categorie" : `Adaugă categorie de ${formType === "income" ? "venit" : "cheltuială"}`}
             </h3>
 
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium !text-white/90 mb-1.5">
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
                   Nume categorie
                 </label>
                 <input
@@ -272,13 +251,13 @@ export default function CategoriesPage() {
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="ex: Salariu, Chirie, Mâncare..."
-                  className="w-full bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/50"
                   autoFocus
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium !text-white/90 mb-3">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Icon
                 </label>
                 <div className="flex flex-wrap gap-2 mb-2">
@@ -289,7 +268,7 @@ export default function CategoriesPage() {
                       className={`text-2xl p-2 rounded-xl transition-all ${
                         formIcon === emoji
                           ? "bg-white/40 scale-110 border border-white/60"
-                          : "bg-white/10 hover:bg-white/20 border border-transparent"
+                          : "bg-gray-50 hover:bg-white border border-transparent"
                       }`}
                     >
                       {emoji}
@@ -297,21 +276,21 @@ export default function CategoriesPage() {
                   ))}
                 </div>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="!text-white/70 text-sm">Ales:</span>
+                  <span className="text-gray-500 text-sm">Ales:</span>
                   <span className="text-2xl">{formIcon}</span>
                   <input
                     type="text"
                     value={formIcon}
                     onChange={(e) => setFormIcon(e.target.value)}
                     maxLength={2}
-                    className="bg-white/10 border border-white/30 rounded-lg px-2 py-1 text-white text-center w-16 text-lg focus:outline-none"
+                    className="bg-gray-50 border border-gray-300 rounded-lg px-2 py-1 text-white text-center w-16 text-lg focus:outline-none"
                     placeholder="✏️"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium !text-white/90 mb-3">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Culoare
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -340,7 +319,7 @@ export default function CategoriesPage() {
             <div className="flex gap-3 mt-8">
               <button
                 onClick={closeModal}
-                className="flex-1 bg-white/10 hover:bg-white/20 !text-white border border-white/30 rounded-xl py-3 font-medium transition-all"
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 border border-gray-300 rounded-xl py-3 font-medium transition-all"
               >
                 Anulează
               </button>
@@ -370,18 +349,18 @@ function CategoryTable({ categories, onEdit, onDelete, deletingId }: CategoryTab
   return (
     <table className="w-full">
       <thead>
-        <tr className="border-b border-white/20">
-          <th className="text-left px-6 py-4 !text-white/70 text-sm font-medium uppercase tracking-wide">Icon</th>
-          <th className="text-left px-6 py-4 !text-white/70 text-sm font-medium uppercase tracking-wide">Nume</th>
-          <th className="text-left px-6 py-4 !text-white/70 text-sm font-medium uppercase tracking-wide hidden sm:table-cell">Tip</th>
-          <th className="text-right px-6 py-4 !text-white/70 text-sm font-medium uppercase tracking-wide">Acțiuni</th>
+        <tr className="border-b border-gray-300">
+          <th className="text-left px-6 py-4 text-gray-500 text-sm font-medium uppercase tracking-wide">Icon</th>
+          <th className="text-left px-6 py-4 text-gray-500 text-sm font-medium uppercase tracking-wide">Nume</th>
+          <th className="text-left px-6 py-4 text-gray-500 text-sm font-medium uppercase tracking-wide hidden sm:table-cell">Tip</th>
+          <th className="text-right px-6 py-4 text-gray-500 text-sm font-medium uppercase tracking-wide">Acțiuni</th>
         </tr>
       </thead>
       <tbody>
         {categories.map((cat, index) => (
           <tr
             key={cat.id}
-            className={`border-b border-white/10 hover:bg-white/10 transition-colors ${
+            className={`border-b border-gray-200 hover:bg-gray-100 transition-colors ${
               index === categories.length - 1 ? "border-b-0" : ""
             }`}
           >
@@ -395,9 +374,9 @@ function CategoryTable({ categories, onEdit, onDelete, deletingId }: CategoryTab
             </td>
             <td className="px-6 py-4">
               <div className="flex items-center gap-2">
-                <span className="!text-white font-medium">{cat.name}</span>
+                <span className="text-gray-800 font-medium">{cat.name}</span>
                 {cat.isSystemCategory && (
-                  <span className="bg-white/20 !text-white/70 text-xs px-2 py-0.5 rounded-full">
+                  <span className="bg-white text-gray-500 text-xs px-2 py-0.5 rounded-full">
                     sistem
                   </span>
                 )}
@@ -406,8 +385,8 @@ function CategoryTable({ categories, onEdit, onDelete, deletingId }: CategoryTab
             <td className="px-6 py-4 hidden sm:table-cell">
               <span className={`text-xs px-2 py-1 rounded-full border ${
                 cat.type === "income"
-                  ? "bg-green-500/20 border-green-400/30 !text-white"
-                  : "bg-red-500/20 border-red-400/30 !text-white"
+                  ? "bg-green-500/20 border-green-400/30 text-gray-900"
+                  : "bg-red-500/20 border-red-400/30 text-gray-900"
               }`}>
                 {cat.type === "income" ? "Venit" : "Cheltuială"}
               </span>
@@ -417,14 +396,14 @@ function CategoryTable({ categories, onEdit, onDelete, deletingId }: CategoryTab
                 <button
                   onClick={() => onEdit(cat)}
                   disabled={cat.isSystemCategory}
-                  className="bg-white/20 hover:bg-white/30 !text-white border border-white/30 rounded-lg px-3 py-1.5 text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300 rounded-lg px-3 py-1.5 text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Editează
                 </button>
                 <button
                   onClick={() => onDelete(cat)}
                   disabled={cat.isSystemCategory || deletingId === cat.id}
-                  className="bg-red-500/30 hover:bg-red-500/50 !text-white border border-red-400/30 rounded-lg px-3 py-1.5 text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="bg-red-500/30 hover:bg-red-500/50 text-gray-900 border border-red-400/30 rounded-lg px-3 py-1.5 text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {deletingId === cat.id ? "..." : "Șterge"}
                 </button>
