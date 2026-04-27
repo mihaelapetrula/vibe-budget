@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { href: "/dashboard",              label: "🏠 Dashboard" },
   { href: "/dashboard/transactions", label: "💳 Tranzacții" },
   { href: "/dashboard/upload",       label: "📤 Upload" },
+  { href: "/dashboard/reports",      label: "📊 Rapoarte" },
   { href: "/dashboard/banks",        label: "🏦 Bănci" },
   { href: "/dashboard/categories",   label: "🗂️ Categorii" },
   { href: "/dashboard/currencies",   label: "💱 Valute" },
