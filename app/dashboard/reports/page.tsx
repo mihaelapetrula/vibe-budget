@@ -171,28 +171,42 @@ export default function ReportsPage() {
         {/* Sumar perioadă */}
         {data && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-gray-100 border border-gray-300 rounded-2xl p-5 shadow-sm">
-              <p className="text-gray-500 text-sm">Total venituri</p>
-              <p className="text-2xl font-bold text-green-600 mt-1">
-                +{formatRON(data.summary.totalIncome)} RON
-              </p>
-            </div>
-            <div className="bg-gray-100 border border-gray-300 rounded-2xl p-5 shadow-sm">
-              <p className="text-gray-500 text-sm">Total cheltuieli</p>
-              <p className="text-2xl font-bold text-red-500 mt-1">
+            <div className="bg-red-50 border border-red-200 rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xl">💸</span>
+                <p className="text-red-700 text-sm font-medium">Total cheltuieli</p>
+              </div>
+              <p className="text-2xl font-bold text-red-600">
                 -{formatRON(data.summary.totalExpenses)} RON
               </p>
+              <p className="text-red-400 text-xs mt-1">{PERIOD_LABELS[period]}</p>
             </div>
-            <div className="bg-gray-100 border border-gray-300 rounded-2xl p-5 shadow-sm">
-              <p className="text-gray-500 text-sm">Sold net</p>
-              <p className={`text-2xl font-bold mt-1 ${
-                data.summary.totalIncome - data.summary.totalExpenses >= 0
-                  ? "text-teal-600" : "text-red-500"
-              }`}>
-                {data.summary.totalIncome - data.summary.totalExpenses >= 0 ? "+" : ""}
-                {formatRON(data.summary.totalIncome - data.summary.totalExpenses)} RON
+            <div className="bg-green-50 border border-green-200 rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xl">💰</span>
+                <p className="text-green-700 text-sm font-medium">Total venituri</p>
+              </div>
+              <p className="text-2xl font-bold text-green-600">
+                +{formatRON(data.summary.totalIncome)} RON
               </p>
+              <p className="text-green-400 text-xs mt-1">{PERIOD_LABELS[period]}</p>
             </div>
+            {(() => {
+              const balance = data.summary.totalIncome - data.summary.totalExpenses;
+              const positive = balance >= 0;
+              return (
+                <div className={`rounded-2xl p-5 shadow-sm border ${positive ? "bg-teal-50 border-teal-200" : "bg-red-50 border-red-200"}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">{positive ? "📈" : "📉"}</span>
+                    <p className={`text-sm font-medium ${positive ? "text-teal-700" : "text-red-700"}`}>Balanță</p>
+                  </div>
+                  <p className={`text-2xl font-bold ${positive ? "text-teal-600" : "text-red-600"}`}>
+                    {positive ? "+" : ""}{formatRON(balance)} RON
+                  </p>
+                  <p className={`text-xs mt-1 ${positive ? "text-teal-400" : "text-red-400"}`}>{PERIOD_LABELS[period]}</p>
+                </div>
+              );
+            })()}
           </div>
         )}
 
